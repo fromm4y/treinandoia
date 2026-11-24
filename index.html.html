@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Treinador de IA</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,51 +19,67 @@
 *,*::before,*::after{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.wrap{max-width:780px;margin:0 auto;padding-block:24px 60px}
+.wrap{max-width:800px;margin:0 auto;padding-block:24px 60px}
 h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 h1{font-size:clamp(2.4rem,7vw,3.6rem);font-weight:700}
 h2{font-size:clamp(1.6rem,4.5vw,2.1rem);font-weight:700}
+h3{font-size:1.2rem}
 p{margin:0}
 .screen{display:none}.screen.on{display:block}
 .card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;margin-top:16px}
 .muted{color:var(--soft)}
 .stack{display:flex;flex-direction:column;gap:12px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.end{justify-content:flex-end}
 button{font:inherit;cursor:pointer;border:none;border-radius:16px;padding:12px 20px;font-weight:800;min-height:50px;color:inherit}
 button:focus-visible,input:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
 .go{background:var(--accent);color:#fff}
-.go:disabled{opacity:.4;cursor:not-allowed}
+.go:disabled,.yes:disabled,.no:disabled{opacity:.45;cursor:not-allowed}
 .soft{background:var(--chip);border:2px solid var(--line)}
 .listen{background:transparent;border:2px solid var(--line);min-height:40px;padding:6px 14px;font-size:.95rem}
 input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--chip);color:var(--ink)}
+.num{max-width:180px;font-size:1.4rem!important;text-align:center;font-variant-numeric:tabular-nums}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800;margin-bottom:8px}
 .track{display:flex;gap:6px;margin-bottom:10px}
 .track span{flex:1;height:10px;border-radius:6px;background:var(--line)}
 .track span.done{background:var(--mint)}.track span.now{background:var(--sun)}
 .eyebrow{font-family:var(--display);font-weight:600;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;font-size:.85rem}
 .robot{font-size:4.2rem;line-height:1}
-.bubble{background:var(--chip);border:2px solid var(--line);border-radius:18px;padding:12px 16px;font-weight:700}
-.big{font-size:5rem;text-align:center;line-height:1.1;margin:8px 0}
+.bubble{background:var(--chip);border:2px solid var(--line);border-radius:18px;padding:12px 16px;font-weight:700;flex:1;min-width:0}
+.tip{border-left:5px solid var(--sun);background:color-mix(in srgb,var(--sun) 16%,var(--paper));border-radius:12px;padding:10px 14px;font-weight:700}
+.big{font-size:4.5rem;text-align:center;line-height:1.1;margin:6px 0}
+.q{font-size:1.2rem;font-weight:800}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.choices button{min-height:70px;font-size:1.15rem}
+.choices button{min-height:66px;font-size:1.1rem}
 .yes{background:var(--mint);color:#fff}.no{background:var(--accent);color:#fff}
 .opts{display:grid;gap:10px}
 .opt{text-align:left;background:var(--chip);border:2px solid var(--line)}
 .opt.right{border-color:var(--mint);background:color-mix(in srgb,var(--mint) 18%,var(--paper))}
 .opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--paper))}
+.opt:disabled{cursor:default}
 .fb{font-weight:800;min-height:1.6em}
 .fb.ok{color:var(--mint)}.fb.no{color:var(--bad)}
 .bins{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .bin{border:2px dashed var(--line);border-radius:18px;padding:10px;min-height:110px}
-.bin h3{font-size:1.05rem;margin-bottom:6px}
-.bin .items{display:flex;flex-wrap:wrap;gap:6px;font-size:2rem}
+.bin h3{font-size:1rem;margin-bottom:6px}
+.bin .items{display:flex;flex-wrap:wrap;gap:8px;font-size:2rem}
 .bin .items span{position:relative}
-.bin .items small{position:absolute;right:-6px;bottom:-4px;font-size:.9rem}
-.grid-animals{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;text-align:center;font-size:2.2rem}
+.bin .items small{position:absolute;right:-8px;bottom:-4px;font-size:.85rem}
+.dataset{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.dataset button{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--chip);border:2px solid var(--line);padding:8px 4px;font-size:.9rem}
+.dataset button span{font-size:2.2rem;line-height:1.1}
+.dataset button.mark{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--paper))}
+.grid-animals{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;text-align:center;font-size:2.1rem}
 .grid-animals div{background:var(--chip);border-radius:14px;padding:6px 0;transition:opacity .25s}
 .grid-animals div.out{opacity:.18}
 .grid-animals small{display:block;font-size:.7rem;font-weight:800;color:var(--soft)}
-@media (max-width:520px){.grid-animals{grid-template-columns:repeat(4,1fr)}.choices{grid-template-columns:1fr}}
+.tree{display:flex;flex-direction:column;gap:8px;font-weight:700;font-size:.98rem}
+.tree .node{background:var(--chip);border:2px solid var(--line);border-radius:14px;padding:8px 12px}
+.tree b.s{color:var(--bad)}.tree b.n{color:var(--mint)}
+.tree .lvl2{margin-left:22px}.tree .lvl3{margin-left:44px}
+.mail{background:var(--chip);border:2px solid var(--line);border-radius:16px;padding:14px;text-align:left}
+.mail .from{color:var(--soft);font-size:.9rem;font-weight:800}
+@media (max-width:560px){.grid-animals{grid-template-columns:repeat(4,1fr)}.choices,.bins{grid-template-columns:1fr}.dataset{grid-template-columns:repeat(3,1fr)}.tree .lvl2{margin-left:10px}.tree .lvl3{margin-left:20px}}
 .code{font-family:var(--display);font-weight:700;font-size:clamp(2rem,8vw,3rem);color:var(--accent);letter-spacing:.05em;text-align:center}
 .center{text-align:center}
 .tag{display:inline-block;background:var(--sun);color:#16324A;border-radius:999px;padding:2px 12px;font-weight:800;font-size:.85rem}
@@ -77,9 +92,9 @@ input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;bo
 <section class="screen on" id="s-start">
   <div class="robot" aria-hidden="true">🤖</div>
   <h1>Treinador de IA</h1>
-  <p class="muted" style="margin-top:8px">Conheça o Bit, um robô que ainda não sabe nada. Você vai treinar ele em 4 missões!</p>
+  <p class="muted" style="margin-top:8px">Conheça o Bit, um robô que ainda não sabe nada. Você vai treinar ele em <b>6 missões</b>. Algumas são bem difíceis!</p>
   <div class="card stack">
-    <p><b>Como funciona:</b> cada acerto vale ⭐. No fim, você ganha um código de Treinador.</p>
+    <p><b>Regras:</b> só ganha ⭐ quem acerta <b>de primeira</b>. Leia com calma, sem chutar!</p>
     <p class="muted">Viu o botão <b>🔊 Ouvir</b>? Ele lê as instruções pra você.</p>
     <label for="name"><b>Seu nome:</b></label>
     <input type="text" id="name" maxlength="30" autocomplete="off" placeholder="Digite seu nome">
@@ -90,86 +105,79 @@ input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;bo
 <!-- MISSÃO 1 -->
 <section class="screen" id="s-m1">
   <div class="track" data-step="0"></div>
-  <div class="top"><span class="eyebrow">Missão 1 de 4</span><span class="stars"></span></div>
+  <div class="top"><span class="eyebrow">Missão 1 de 6</span><span class="stars"></span></div>
   <h2>Ensine o Bit</h2>
-  <div class="card stack">
-    <div class="row"><span class="bubble" id="m1say">Eu não sei o que é fruta! Me ensina? Pra cada coisa, diga se é fruta ou não.</span>
+  <div class="card stack" id="m1a">
+    <div class="row"><span class="bubble" id="m1say">Eu não sei o que é fruta! Me ensina? Pra cada coisa, diga se é fruta ou não. Cuidado: tem pegadinha!</span>
       <button class="listen" data-say="m1say">🔊 Ouvir</button></div>
+    <p class="tip" id="m1tip">💡 Dica de cientista: fruta é a parte da planta que nasce da flor e guarda as sementes dentro. Não importa se é doce ou salgada!</p>
     <div id="m1train">
       <p class="muted center" id="m1count"></p>
       <div class="big" id="m1item"></div>
+      <h3 class="center" id="m1name" style="margin-bottom:10px"></h3>
       <div class="choices">
-        <button class="yes" id="m1yes">🍽️ É fruta</button>
+        <button class="yes" id="m1yes">🌸 É fruta</button>
         <button class="no" id="m1no">✋ Não é fruta</button>
       </div>
     </div>
     <div id="m1test" hidden class="stack">
-      <p class="bubble" id="m1testsay">Aprendi! Agora vou separar coisas que eu NUNCA vi. Olha só:</p>
+      <p class="bubble">Aprendi! Agora vou separar coisas que eu NUNCA vi. Olha só:</p>
       <div class="bins">
         <div class="bin"><h3>Bit acha que é fruta</h3><div class="items" id="binY"></div></div>
         <div class="bin"><h3>Bit acha que não é</h3><div class="items" id="binN"></div></div>
       </div>
       <p class="fb" id="m1fb"></p>
-      <div class="row" style="justify-content:flex-end"><button class="go" id="m1next" hidden>Próxima missão</button></div>
+      <p class="muted" id="m1errs"></p>
+      <div class="row end"><button class="go" id="m1next" hidden>Próxima fase</button></div>
     </div>
+  </div>
+  <div class="card stack" id="m1b" hidden>
+    <span class="eyebrow">Fase 2: limpe os dados</span>
+    <div class="row"><span class="bubble" id="m1bsay">Alguém me ensinou gatos e cachorros, mas colocou o nome errado em algumas fotos. Clique nas fotos com o nome ERRADO. Tem mais de uma!</span>
+      <button class="listen" data-say="m1bsay">🔊 Ouvir</button></div>
+    <div class="dataset" id="dataset"></div>
+    <p class="fb" id="m1bfb"></p>
+    <div class="row end"><button class="soft" id="m1bcheck">Conferir</button><button class="go" id="m1bnext" hidden>Próxima missão</button></div>
   </div>
 </section>
 
-<!-- MISSÃO 2 -->
-<section class="screen" id="s-m2">
-  <div class="track" data-step="1"></div>
-  <div class="top"><span class="eyebrow">Missão 2 de 4</span><span class="stars"></span></div>
-  <h2>Dados bons, IA boa</h2>
+<!-- QUIZ GENÉRICO (missões 2, 3, 4b, 5, 6) -->
+<section class="screen" id="s-quiz">
+  <div class="track" id="qtrack"></div>
+  <div class="top"><span class="eyebrow" id="qeyebrow"></span><span class="stars"></span></div>
+  <h2 id="qtitle"></h2>
   <div class="card stack">
-    <p class="muted" id="m2count"></p>
-    <div class="row"><span class="bubble" id="m2q"></span><button class="listen" data-say="m2q">🔊 Ouvir</button></div>
-    <div class="big" id="m2pic" style="font-size:3rem"></div>
-    <div class="opts" id="m2opts"></div>
-    <p class="fb" id="m2fb"></p>
-    <div class="row" style="justify-content:flex-end"><button class="go" id="m2next" hidden>Continuar</button></div>
-  </div>
-</section>
-
-<!-- MISSÃO 3 -->
-<section class="screen" id="s-m3">
-  <div class="track" data-step="2"></div>
-  <div class="top"><span class="eyebrow">Missão 3 de 4</span><span class="stars"></span></div>
-  <h2>Tem IA aqui?</h2>
-  <div class="card stack">
-    <div class="row"><span class="bubble" id="m3say">IA aprende com exemplos. Outras máquinas só seguem regras fixas. Essa coisa usa IA?</span>
-      <button class="listen" data-say="m3say">🔊 Ouvir</button></div>
-    <p class="muted center" id="m3count"></p>
-    <div class="big" id="m3pic"></div>
-    <h3 class="center" id="m3name"></h3>
-    <div class="choices">
-      <button class="yes" id="m3yes">🧠 Tem IA</button>
-      <button class="no" id="m3no">⚙️ Não tem IA</button>
-    </div>
-    <p class="fb center" id="m3fb"></p>
-    <div class="row" style="justify-content:flex-end"><button class="go" id="m3next" hidden>Continuar</button></div>
+    <div class="row"><span class="bubble" id="qintro"></span><button class="listen" data-say="qintro">🔊 Ouvir</button></div>
+    <div id="qpanel"></div>
+    <p class="muted" id="qcount"></p>
+    <div id="qpic"></div>
+    <p class="q" id="qq"></p>
+    <div id="qbody"></div>
+    <p class="fb" id="qfb"></p>
+    <div class="row end"><button class="go" id="qnext" hidden>Continuar</button></div>
   </div>
 </section>
 
 <!-- MISSÃO 4 -->
 <section class="screen" id="s-m4">
   <div class="track" data-step="3"></div>
-  <div class="top"><span class="eyebrow">Missão 4 de 4</span><span class="stars"></span></div>
+  <div class="top"><span class="eyebrow">Missão 4 de 6</span><span class="stars"></span></div>
   <h2>Adivinha, Bit!</h2>
   <div class="card stack">
     <div class="row"><span class="bubble" id="m4intro">Escolha um bicho em segredo, só na sua cabeça. Eu vou fazer perguntas de sim ou não e adivinhar!</span>
       <button class="listen" data-say="m4intro">🔊 Ouvir</button></div>
     <div class="grid-animals" id="m4grid"></div>
     <div id="m4ask" class="stack">
-      <p class="bubble" id="m4q" style="font-size:1.2rem"></p>
+      <p class="bubble" id="m4q" style="font-size:1.15rem"></p>
       <div class="choices"><button class="yes" id="m4yes">👍 Sim</button><button class="no" id="m4no">👎 Não</button></div>
     </div>
     <div id="m4end" hidden class="stack">
-      <p class="bubble" id="m4guess" style="font-size:1.2rem"></p>
+      <p class="bubble" id="m4guess" style="font-size:1.15rem"></p>
       <div class="choices" id="m4confirm"><button class="yes" id="m4right">Acertou!</button><button class="no" id="m4wrong">Errou!</button></div>
-      <p class="muted" id="m4lesson" hidden>Sabia? Eu fiz isso com uma <b>árvore de decisão</b>: cada pergunta corta metade dos bichos. Muitas IAs decidem assim!</p>
-      <div class="row" style="justify-content:flex-end" id="m4btns" hidden>
+      <p class="tip" id="m4lesson" hidden>Eu usei uma <b>árvore de decisão</b>: escolho a pergunta que corta os bichos mais ou menos pela metade. Por isso acho rápido! Agora é a sua vez de seguir uma árvore.</p>
+      <div class="row end" id="m4btns" hidden>
         <button class="soft" id="m4again">Jogar de novo</button>
-        <button class="go" id="m4finish">Ver meu resultado</button>
+        <button class="go" id="m4go">Fase 2: o filtro de spam</button>
       </div>
     </div>
   </div>
@@ -180,7 +188,7 @@ input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;bo
   <div class="robot center" aria-hidden="true">🤖🏅</div>
   <h1 class="center" id="endTitle"></h1>
   <div class="card stack center">
-    <span><span class="tag">Treinador de IA certificado</span></span>
+    <span><span class="tag" id="endRank"></span></span>
     <p class="muted">Seu código de Treinador</p>
     <div class="code" id="endCode"></div>
     <p style="font-weight:800" id="endStars"></p>
@@ -188,10 +196,12 @@ input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;bo
   </div>
   <div class="card stack">
     <h3>O que você aprendeu hoje</h3>
-    <p>✅ A IA aprende com <b>exemplos</b> que as pessoas dão.</p>
-    <p>✅ Exemplos errados ou repetidos fazem a IA <b>errar</b>.</p>
+    <p>✅ A IA aprende com <b>exemplos (dados)</b> que as pessoas dão.</p>
+    <p>✅ Dados errados, repetidos ou desequilibrados fazem a IA <b>errar</b> e ter <b>viés</b>.</p>
     <p>✅ Nem toda máquina tem IA: algumas só seguem <b>regras fixas</b>.</p>
-    <p>✅ A IA pode decidir fazendo <b>perguntas</b>, como numa árvore.</p>
+    <p>✅ Uma <b>árvore de decisão</b> decide com perguntas de sim ou não.</p>
+    <p>✅ A IA pode <b>inventar</b> respostas, então sempre confira.</p>
+    <p>✅ Cientistas medem a IA pela <b>taxa de acerto</b>.</p>
     <div><button class="soft" id="againAll">Treinar de novo e ganhar mais estrelas</button></div>
   </div>
 </section>
@@ -200,94 +210,156 @@ input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;bo
 
 <script>
 const $=id=>document.getElementById(id);
-let student="",stars=0;const MAX=17;
+let student="",stars=0;
+const MAX=5+6+12+7+6+6;
+function paintStars(){document.querySelectorAll(".stars").forEach(s=>s.textContent="⭐ "+stars+" / "+MAX);}
+function drawTrack(t,st){t.innerHTML="";for(let i=0;i<6;i++){const s=document.createElement("span");if(i<st)s.className="done";else if(i===st)s.className="now";t.appendChild(s);}}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$(id).classList.add("on");window.scrollTo(0,0);
-  document.querySelectorAll("#"+id+" .track").forEach(t=>{t.innerHTML="";const st=+t.dataset.step;for(let i=0;i<4;i++){const s=document.createElement("span");if(i<st)s.className="done";else if(i===st)s.className="now";t.appendChild(s);}});
-  paintStars();}
-function paintStars(){document.querySelectorAll(".stars").forEach(s=>s.textContent="⭐ "+stars);}
-function fb(el,ok,txt){el.textContent=txt;el.className=el.className.replace(/ ?(ok|no)/g,"")+(ok?" ok":" no");}
+  document.querySelectorAll("#"+id+" .track[data-step]").forEach(t=>drawTrack(t,+t.dataset.step));paintStars();}
+function fb(el,ok,txt){el.textContent=txt;el.classList.remove("ok","no");el.classList.add(ok?"ok":"no");}
+function addStar(n){stars+=n||1;paintStars();}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 
 /* voz */
 const hasTTS="speechSynthesis" in window;let voice=null;
 function pick(){const v=speechSynthesis.getVoices();voice=v.find(x=>/pt[-_]BR/i.test(x.lang))||v.find(x=>/^pt/i.test(x.lang))||null;}
 if(hasTTS){pick();speechSynthesis.onvoiceschanged=pick;}
-function say(t){if(!hasTTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[^\p{L}\p{N}\s.,!?:]/gu,""));u.lang="pt-BR";if(voice)u.voice=voice;u.rate=.95;speechSynthesis.speak(u);}
+function say(t){if(!hasTTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[^\p{L}\p{N}\s.,!?:%]/gu,""));u.lang="pt-BR";if(voice)u.voice=voice;u.rate=.95;speechSynthesis.speak(u);}
 document.addEventListener("click",e=>{const b=e.target.closest(".listen");if(b)say($(b.dataset.say).textContent);});
 
 /* início */
 $("name").addEventListener("input",e=>$("startBtn").disabled=e.target.value.trim().length<2);
 $("name").addEventListener("keydown",e=>{if(e.key==="Enter"&&!$("startBtn").disabled)$("startBtn").click();});
 $("startBtn").addEventListener("click",()=>{student=$("name").value.trim();startAll();});
-function startAll(){stars=0;startM1();}
+function startAll(){stars=0;m4star=false;startM1();}
 
-/* MISSÃO 1 */
-const TRAIN=[["🍎",1],["🥕",0],["🍌",1],["🧀",0],["🍇",1],["🍞",0],["🍓",1],["🥦",0]];
-const TEST=[["🍉",1],["🥚",0],["🍍",1],["🍪",0],["🍐",1],["🌽",0]];
-let m1i=0,m1wrong=0;
-function startM1(){m1i=0;m1wrong=0;$("m1train").hidden=false;$("m1test").hidden=true;$("binY").innerHTML="";$("binN").innerHTML="";$("m1fb").textContent="";$("m1next").hidden=true;showM1();show("s-m1");}
-function showM1(){$("m1item").textContent=TRAIN[m1i][0];$("m1count").textContent="Exemplo "+(m1i+1)+" de "+TRAIN.length;}
-function m1answer(v){if(v!==TRAIN[m1i][1])m1wrong++;m1i++;if(m1i<TRAIN.length)showM1();else runTest();}
+/* ============ MISSÃO 1 ============ */
+const TRAIN=[["🍎","Maçã",1],["🥕","Cenoura",0],["🍅","Tomate",1],["🥔","Batata",0],["🥑","Abacate",1],["🧅","Cebola",0],
+  ["🥒","Pepino",1],["🍄","Cogumelo",0],["🥥","Coco",1],["🥦","Brócolis",0],["🍇","Uva",1],["🍞","Pão",0]];
+const WHY={"Tomate":"tomate é fruta: nasce da flor e tem sementes dentro.","Abacate":"abacate é fruta: tem um caroço (semente) dentro.",
+  "Pepino":"pepino é fruta: corta ele e veja as sementes!","Coco":"coco é fruta: ele é a semente gigante da palmeira.",
+  "Cenoura":"cenoura é raiz, não fruta.","Batata":"batata é um caule que cresce embaixo da terra.","Cebola":"cebola é um bulbo, parte de baixo da planta.",
+  "Cogumelo":"cogumelo nem é planta, é um fungo!","Brócolis":"brócolis são flores, não frutas.","Pão":"pão é feito de trigo, não é fruta.","Maçã":"maçã é fruta.","Uva":"uva é fruta."};
+const TEST=[["🍉",1],["🍆",1],["🧄",0],["🍋",1],["🥬",0],["🍑",1],["🍠",0],["🍪",0]];
+let m1i=0,m1wrongList=[];
+function startM1(){m1i=0;m1wrongList=[];$("m1a").hidden=false;$("m1b").hidden=true;$("m1train").hidden=false;$("m1test").hidden=true;$("m1tip").hidden=false;
+  $("binY").innerHTML="";$("binN").innerHTML="";$("m1fb").textContent="";$("m1errs").textContent="";$("m1next").hidden=true;showM1();show("s-m1");}
+function showM1(){$("m1item").textContent=TRAIN[m1i][0];$("m1name").textContent=TRAIN[m1i][1];$("m1count").textContent="Exemplo "+(m1i+1)+" de "+TRAIN.length;}
+function m1answer(v){if(v!==TRAIN[m1i][2])m1wrongList.push(TRAIN[m1i][1]);m1i++;if(m1i<TRAIN.length)showM1();else runTest();}
 $("m1yes").onclick=()=>m1answer(1);$("m1no").onclick=()=>m1answer(0);
 function runTest(){
-  $("m1train").hidden=true;$("m1test").hidden=false;
-  const errs=Math.min(m1wrong,TEST.length);let k=0;
+  $("m1train").hidden=true;$("m1tip").hidden=true;$("m1test").hidden=false;
+  const errs=Math.min(m1wrongList.length,TEST.length);let k=0;
   TEST.forEach(([e,real],i)=>setTimeout(()=>{
     const wrong=i<errs;const guess=wrong?1-real:real;
     const sp=document.createElement("span");sp.innerHTML=e+"<small>"+(wrong?"❌":"✅")+"</small>";
     $(guess?"binY":"binN").appendChild(sp);k++;
     if(k===TEST.length){
-      const ok=TEST.length-errs;const earned=errs===0?3:errs===1?2:1;stars+=earned;paintStars();
-      fb($("m1fb"),errs===0,errs===0?"Perfeito! Você ensinou tudo certo e eu acertei "+ok+" de 6. +3 ⭐"
-        :"Eu acertei "+ok+" de 6. Errei porque aprendi "+m1wrong+" exemplo(s) errado(s). A IA só é boa se os exemplos forem bons! +"+earned+" ⭐");
+      const ok=TEST.length-errs;const earned=errs===0?3:errs===1?2:errs<=3?1:0;addStar(earned);
+      fb($("m1fb"),errs===0,errs===0?"Perfeito! Você me ensinou tudo certo e eu acertei "+ok+" de "+TEST.length+". +3 ⭐"
+        :"Eu acertei "+ok+" de "+TEST.length+". Errei porque você me ensinou "+m1wrongList.length+" exemplo(s) errado(s). +"+earned+" ⭐");
+      if(m1wrongList.length)$("m1errs").textContent="Onde você errou: "+m1wrongList.map(n=>WHY[n]).join(" ");
       $("m1next").hidden=false;}
-  },500*(i+1)));
+  },450*(i+1)));
 }
-$("m1next").onclick=startM2;
+$("m1next").onclick=startM1b;
 
-/* MISSÃO 2 */
-const M2=[
- {q:"Eu só vi fotos de maçãs vermelhas. Aí apareceu esta e eu disse: NÃO é maçã! Por que eu errei?",pic:"🍎🍎🍎 ➜ 🍏",o:["Porque eu só vi maçãs vermelhas","Porque eu estava com sono","Porque maçã verde não existe"],a:0,why:"Isso! Meus exemplos eram todos iguais, então eu não aprendi que maçã pode ser verde."},
- {q:"Qual grupo de fotos me ensina MELHOR a reconhecer gatos?",pic:"🐱 ?",o:["🐱 🐱 🐱 🐱 (o mesmo gato 4 vezes)","🐱 🐈 😺 🙀 (gatos diferentes)","🐶 🐱 🐭 🐰 (um de cada bicho)"],a:1,why:"Exato! Exemplos variados me ajudam a reconhecer qualquer gato."},
- {q:"Eu errei bastante. O que é melhor fazer comigo?",pic:"🤖💥",o:["Me desligar pra sempre","Me dar mais exemplos, e diferentes","Gritar comigo"],a:1,why:"Isso! Com mais exemplos e mais variados, eu fico mais esperto."},
- {q:"Quem ensina uma inteligência artificial?",pic:"🧑‍🏫 ➜ 🤖",o:["Ela já nasce sabendo tudo","É mágica","Pessoas, dando exemplos (dados)"],a:2,why:"Perfeito! A IA aprende com os dados que as pessoas mostram pra ela."}
-];
-let m2i=0;
-function startM2(){m2i=0;loadM2();show("s-m2");}
-function loadM2(){const q=M2[m2i];let tries=0,done=false;
-  $("m2count").textContent="Pergunta "+(m2i+1)+" de "+M2.length;$("m2q").textContent=q.q;$("m2pic").textContent=q.pic;
-  $("m2fb").textContent="";$("m2next").hidden=true;const box=$("m2opts");box.innerHTML="";
-  q.o.forEach((t,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=t;
-    b.onclick=()=>{if(done)return;tries++;
-      if(i===q.a){done=true;b.classList.add("right");box.querySelectorAll("button").forEach(x=>x.disabled=true);
-        if(tries===1){stars++;paintStars();fb($("m2fb"),true,q.why+" ⭐");}else fb($("m2fb"),true,q.why);
-        $("m2next").hidden=false;}
-      else{b.classList.add("wrong");b.disabled=true;fb($("m2fb"),false,"Hmm, não foi isso. Tenta outra!");}};
-    box.appendChild(b);});}
-$("m2next").onclick=()=>{m2i++;if(m2i<M2.length)loadM2();else startM3();};
+const DATA=[["🐱","Gato",0],["🐶","Cachorro",0],["🐱","Cachorro",1],["🐕","Cachorro",0],["🐈","Gato",0],
+  ["🐶","Gato",1],["😺","Gato",0],["🐩","Cachorro",0],["🐈","Cachorro",1],["🦮","Cachorro",0]];
+let m1bTries=0,m1bDone=false;
+function startM1b(){$("m1a").hidden=true;$("m1b").hidden=false;m1bTries=0;m1bDone=false;$("m1bfb").textContent="";$("m1bnext").hidden=true;$("m1bcheck").hidden=false;
+  $("dataset").innerHTML="";DATA.forEach((d,i)=>{const b=document.createElement("button");b.innerHTML="<span>"+d[0]+"</span>"+d[1];
+    b.onclick=()=>{if(!m1bDone)b.classList.toggle("mark");};$("dataset").appendChild(b);});window.scrollTo(0,0);}
+$("m1bcheck").onclick=()=>{
+  const btns=[...$("dataset").children];const marked=btns.map(b=>b.classList.contains("mark")?1:0);
+  const wrongTotal=DATA.filter(d=>d[2]).length;const hit=marked.filter((m,i)=>m&&DATA[i][2]).length;const falseHit=marked.filter((m,i)=>m&&!DATA[i][2]).length;
+  m1bTries++;
+  if(hit===wrongTotal&&falseHit===0){m1bDone=true;const earned=m1bTries===1?2:m1bTries===2?1:0;addStar(earned);
+    fb($("m1bfb"),true,"Isso! Você achou os "+wrongTotal+" erros. Limpar os dados é um trabalho de verdade de quem cria IA! +"+earned+" ⭐");
+    $("m1bcheck").hidden=true;$("m1bnext").hidden=false;}
+  else fb($("m1bfb"),false,"Ainda não. Você achou "+hit+" de "+wrongTotal+" erros"+(falseHit?" e marcou "+falseHit+" foto(s) que estavam certas":"")+". Olhe de novo!");
+};
+$("m1bnext").onclick=()=>runQuiz(Q2);
 
-/* MISSÃO 3 */
-const M3=[
- ["📱","Celular que desbloqueia com o seu rosto",1,"Ele aprendeu a reconhecer o seu rosto com muitas fotos."],
- ["💡","Interruptor de luz",0,"Ele só segue uma regra: apertou, acende."],
- ["▶️","YouTube sugerindo vídeos pra você",1,"Ele aprende do que você gosta e sugere parecidos."],
- ["🧮","Calculadora",0,"Ela segue regras fixas de conta. Não aprende nada."],
- ["🌐","Tradutor de idiomas",1,"Ele aprendeu com milhões de textos traduzidos."],
- ["⏲️","Micro-ondas",0,"Ele só conta o tempo que você escolheu."],
- ["🗣️","Assistente de voz que entende o que você fala",1,"Ele aprendeu a entender vozes com muitos exemplos."],
- ["🕰️","Relógio de parede",0,"Ele só anda os ponteiros, sempre igual."]
-];
-let m3i=0,m3lock=false;
-function startM3(){m3i=0;loadM3();show("s-m3");}
-function loadM3(){const c=M3[m3i];m3lock=false;$("m3pic").textContent=c[0];$("m3name").textContent=c[1];$("m3count").textContent=(m3i+1)+" de "+M3.length;
-  $("m3fb").textContent="";$("m3next").hidden=true;$("m3yes").disabled=false;$("m3no").disabled=false;}
-function m3answer(v){if(m3lock)return;m3lock=true;const c=M3[m3i];$("m3yes").disabled=true;$("m3no").disabled=true;
-  if(v===c[2]){stars++;paintStars();fb($("m3fb"),true,"Acertou! "+c[3]+" ⭐");}
-  else fb($("m3fb"),false,(c[2]?"Esse tem IA! ":"Esse não tem IA! ")+c[3]);
-  $("m3next").hidden=false;$("m3next").textContent=m3i===M3.length-1?"Última missão":"Próximo";}
-$("m3yes").onclick=()=>m3answer(1);$("m3no").onclick=()=>m3answer(0);
-$("m3next").onclick=()=>{m3i++;if(m3i<M3.length)loadM3();else startM4();};
+/* ============ QUIZ GENÉRICO ============ */
+let Q=null,qi=0;
+function runQuiz(def){Q=def;qi=0;drawTrack($("qtrack"),def.step);$("qeyebrow").textContent=def.eyebrow;$("qtitle").textContent=def.title;
+  $("qintro").textContent=def.intro;$("qpanel").innerHTML=def.panel||"";show("s-quiz");loadQ();}
+function loadQ(){
+  const s=Q.steps[qi];let tries=0,done=false;
+  $("qcount").textContent=(Q.countLabel||"Pergunta")+" "+(qi+1)+" de "+Q.steps.length;
+  $("qpic").innerHTML=s.mail?`<div class="mail"><div class="from">De: ${esc(s.from)}</div><div>${esc(s.mail)}</div></div>`:(s.pic?`<div class="big" style="font-size:${s.small?"2.6rem":"4.2rem"}">${s.pic}</div>`:"");
+  $("qq").textContent=s.q||"";$("qfb").textContent="";$("qnext").hidden=true;
+  const body=$("qbody");body.innerHTML="";
+  const finishStep=()=>{done=true;$("qnext").hidden=false;$("qnext").textContent=qi===Q.steps.length-1?Q.doneLabel:"Continuar";};
+  if(s.kind==="bin"){
+    const wrap=document.createElement("div");wrap.className="choices";
+    s.labels.forEach((l,i)=>{const b=document.createElement("button");b.className=i===0?"yes":"no";b.textContent=l;
+      b.onclick=()=>{if(done)return;wrap.querySelectorAll("button").forEach(x=>x.disabled=true);
+        if(i===s.a){addStar();fb($("qfb"),true,"Acertou! "+s.why+" ⭐");}else fb($("qfb"),false,"Não foi dessa vez. "+s.why);finishStep();};
+      wrap.appendChild(b);});body.appendChild(wrap);
+  } else if(s.kind==="mc"){
+    const wrap=document.createElement("div");wrap.className="opts";
+    s.o.forEach((t,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=t;
+      b.onclick=()=>{if(done)return;tries++;
+        if(i===s.a){b.classList.add("right");wrap.querySelectorAll("button").forEach(x=>x.disabled=true);
+          if(tries===1){addStar();fb($("qfb"),true,s.why+" ⭐");}else fb($("qfb"),true,s.why);finishStep();}
+        else{b.classList.add("wrong");b.disabled=true;fb($("qfb"),false,"Não é essa. Leia de novo com calma e tente outra!");}};
+      wrap.appendChild(b);});body.appendChild(wrap);
+  } else if(s.kind==="num"){
+    const row=document.createElement("div");row.className="row";
+    const inp=document.createElement("input");inp.type="text";inp.inputMode="decimal";inp.className="num";inp.id="numIn"+qi;inp.placeholder="?";inp.autocomplete="off";
+    const bt=document.createElement("button");bt.className="soft";bt.textContent="Conferir";
+    const unit=document.createElement("b");unit.textContent=s.unit||"";
+    row.append(inp,unit,bt);body.appendChild(row);
+    const check=()=>{if(done)return;const v=parseFloat(inp.value.replace(",",".").replace("%",""));if(isNaN(v)){fb($("qfb"),false,"Digite um número.");return;}
+      tries++;
+      if(Math.abs(v-s.a)<0.01){inp.disabled=true;if(tries===1){addStar();fb($("qfb"),true,"Certinho! "+s.why+" ⭐");}else fb($("qfb"),true,"Certinho! "+s.why);finishStep();}
+      else if(tries>=3){inp.disabled=true;fb($("qfb"),false,"A resposta era "+s.a+(s.unit||"")+". "+s.why);finishStep();}
+      else fb($("qfb"),false,tries===1?"Quase! "+s.hint:"Ainda não. "+s.hint);};
+    bt.onclick=check;inp.addEventListener("keydown",e=>{if(e.key==="Enter")check();});setTimeout(()=>inp.focus(),50);
+  }
+}
+$("qnext").onclick=()=>{qi++;if(qi<Q.steps.length)loadQ();else Q.next();};
 
-/* MISSÃO 4: árvore de decisão */
+/* ============ MISSÃO 2 ============ */
+const Q2={step:1,eyebrow:"Missão 2 de 6",title:"Dados bons, IA boa",doneLabel:"Próxima missão",
+ intro:"Dados são os exemplos que a IA usa pra aprender. Se os dados forem ruins, a IA fica ruim. Responda como um cientista!",
+ steps:[
+ {kind:"mc",pic:"🐶×90  🐱×10",small:1,q:"O Bit treinou com 90 fotos de cachorro e só 10 de gato. Agora ele chama quase tudo de cachorro. Por quê?",
+  o:["Porque cachorro é mais bonito","Porque os dados estavam desequilibrados: muito mais cachorro do que gato","Porque gatos são difíceis de fotografar","Porque o Bit não gosta de gatos"],a:1,why:"Isso! Quando um grupo tem muito mais exemplos, a IA puxa a resposta pra ele."},
+ {kind:"mc",pic:"🙂🙂🙂 ➜ ❓",small:1,q:"Uma IA de reconhecer rostos foi treinada quase só com fotos de pessoas de pele clara. Ela erra muito com pessoas de pele escura. Como chamamos isso?",
+  o:["Viés: os dados não representavam todo mundo","Defeito na câmera","Falta de internet","Isso é normal e não tem problema"],a:0,why:"Exato! Viés é quando a IA fica injusta porque os dados deixaram pessoas de fora."},
+ {kind:"mc",pic:"📸 100% ➜ 🆕 40%",small:1,q:"O Bit acerta 100% nas fotos que ele estudou, mas só 40% em fotos novas. O que aconteceu?",
+  o:["Ele aprendeu perfeitamente","Ele decorou as fotos em vez de aprender de verdade","As fotos novas estavam apagadas","Ele precisa de mais bateria"],a:1,why:"Isso! É como decorar a prova antiga e ir mal na prova nova. Na IA isso tem nome: sobreajuste."},
+ {kind:"mc",pic:"🧪",q:"Pra saber se o Bit aprendeu de verdade, que fotos devo usar no teste?",
+  o:["As mesmas fotos do treino","Fotos novas que ele nunca viu","Só uma foto","Fotos de qualquer coisa, sem nome"],a:1,why:"Certo! Testar com fotos novas mostra se ele sabe mesmo ou só decorou."},
+ {kind:"mc",pic:"📱🤳",q:"Um app pede 50 fotos do seu rosto pra treinar uma IA. O que é mais importante pensar antes?",
+  o:["Se as fotos vão ficar bonitas","Quem vai guardar minhas fotos e pra que vão usar","Quantas curtidas vou ganhar","Nada, pode mandar sempre"],a:1,why:"Isso! Seu rosto é um dado pessoal. Privacidade importa!"},
+ {kind:"mc",pic:"🖼️ 🔊 📝 ❤️",small:1,q:"Qual destes pode ser um DADO pra treinar uma IA?",
+  o:["Só fotos","Só textos","Fotos, áudios, textos e até número de curtidas","Nenhum desses"],a:2,why:"Exato! Quase tudo vira dado: imagem, som, texto e números."}
+ ],next:()=>runQuiz(Q3)};
+
+/* ============ MISSÃO 3 ============ */
+const AI=["🧠 Tem IA","⚙️ Só regra fixa"];
+const Q3={step:2,eyebrow:"Missão 3 de 6",title:"Tem IA aqui?",countLabel:"Cartão",doneLabel:"Próxima missão",
+ intro:"IA aprende com exemplos e se adapta. Outras máquinas só seguem uma regra fixa, sempre igual. Aqui as pegadinhas são mais difíceis!",
+ steps:[
+ {kind:"bin",labels:AI,a:0,pic:"📧",q:"Filtro que manda e-mail pro spam e melhora com os e-mails que você marca",why:"Ele aprende com os e-mails que as pessoas marcam."},
+ {kind:"bin",labels:AI,a:1,pic:"🚦",q:"Semáforo que troca de cor a cada 60 segundos",why:"Ele só conta o tempo, sempre igual."},
+ {kind:"bin",labels:AI,a:0,pic:"📷🚦",q:"Câmera que olha a fila de carros e decide quando abrir o semáforo",why:"Ela reconhece carros nas imagens e decide sozinha."},
+ {kind:"bin",labels:AI,a:0,pic:"⌨️",q:"Teclado do celular que sugere a próxima palavra",why:"Ele aprendeu com muitos textos qual palavra costuma vir depois."},
+ {kind:"bin",labels:AI,a:1,pic:"🔢",q:"Senha de 4 números pra destravar o celular",why:"Só compara: número certo abre, errado não."},
+ {kind:"bin",labels:AI,a:0,pic:"🗺️",q:"GPS que muda a rota quando aparece trânsito",why:"Ele analisa dados de trânsito de muita gente pra prever o melhor caminho."},
+ {kind:"bin",labels:AI,a:1,pic:"⏰",q:"Despertador que toca todo dia às 6h",why:"Regra fixa: deu 6h, toca."},
+ {kind:"bin",labels:AI,a:0,pic:"🎵",q:"App de música montando uma playlist feita pra você",why:"Ele aprende o seu gosto pelas músicas que você ouve."},
+ {kind:"bin",labels:AI,a:1,pic:"🌡️",q:"Ar-condicionado que desliga quando chega em 22 °C",why:"É uma regra simples: chegou em 22, desliga."},
+ {kind:"bin",labels:AI,a:0,pic:"🩻",q:"Programa que olha um raio-X e aponta uma possível doença pro médico",why:"Ele aprendeu com milhares de raios-X. Mas quem decide é o médico!"},
+ {kind:"bin",labels:AI,a:1,pic:"🧾",q:"Planilha que soma as notas da turma",why:"Só faz conta com a fórmula que alguém escreveu."},
+ {kind:"bin",labels:AI,a:1,pic:"🎮",q:"Inimigo de jogo antigo que sempre anda no mesmo caminho",why:"Ele repete um caminho programado. Não aprende nada."}
+ ],next:startM4};
+
+/* ============ MISSÃO 4 ============ */
 const ATTR=[["penas","Ele tem penas?"],["voa","Ele voa?"],["nada","Ele vive ou nada muito na água?"],["pelo","Ele tem pelo?"],["grande","Ele é maior que uma pessoa?"],["fazenda","Ele vive numa fazenda?"],["patas","Ele tem patas?"],["late","Ele late?"]];
 const ANIMALS=[
  ["🐶","Cachorro",[0,0,0,1,0,0,1,1]],["🐱","Gato",[0,0,0,1,0,0,1,0]],["🐮","Vaca",[0,0,0,1,1,1,1,0]],
@@ -305,24 +377,71 @@ function nextQ(){
   ATTR.forEach((_,k)=>{if(asked.includes(k))return;const y=pool.filter(i=>ANIMALS[i][2][k]).length;const s=Math.abs(pool.length/2-y);if(y>0&&y<pool.length&&s<score){score=s;best=k;}});
   if(best<0){guess();return;}
   cur=best;asked.push(best);$("m4q").textContent="Pergunta "+asked.length+": "+ATTR[best][1];}
-function m4ans(v){pool=pool.filter(i=>ANIMALS[i][2][cur]===v);
-  ANIMALS.forEach((_,i)=>$("an"+i).classList.toggle("out",!pool.includes(i)));nextQ();}
+function m4ans(v){pool=pool.filter(i=>ANIMALS[i][2][cur]===v);ANIMALS.forEach((_,i)=>$("an"+i).classList.toggle("out",!pool.includes(i)));nextQ();}
 $("m4yes").onclick=()=>m4ans(1);$("m4no").onclick=()=>m4ans(0);
 function guess(){$("m4ask").hidden=true;$("m4end").hidden=false;
-  if(pool.length===0){$("m4guess").textContent="Hmm, nenhum bicho combina! Acho que alguma resposta saiu trocada 😜";$("m4confirm").hidden=true;endM4();return;}
+  if(pool.length===0){$("m4guess").textContent="Hmm, nenhum bicho combina! Acho que alguma resposta saiu trocada 😜";endM4();return;}
   const a=ANIMALS[pool[0]];$("m4guess").textContent="Já sei! Você pensou no "+a[1]+" "+a[0]+"! Usei só "+asked.length+" perguntas.";}
-function endM4(){if(!m4star){m4star=true;stars++;paintStars();}$("m4lesson").hidden=false;$("m4btns").hidden=false;$("m4confirm").hidden=true;}
+function endM4(){if(!m4star){m4star=true;addStar();}$("m4lesson").hidden=false;$("m4btns").hidden=false;$("m4confirm").hidden=true;}
 $("m4right").onclick=()=>{$("m4guess").textContent+=" 🎉";endM4();};
 $("m4wrong").onclick=()=>{$("m4guess").textContent="Ops! Acho que alguma resposta saiu trocada. Bora de novo?";endM4();};
 $("m4again").onclick=resetM4;
-$("m4finish").onclick=finish;
+$("m4go").onclick=()=>runQuiz(Q4);
 
-/* FIM */
+const TREE=`<div class="tree">
+ <div class="node">1. O e-mail pede <b>senha</b> ou <b>dados do cartão</b>? <b class="s">Sim → SPAM</b> · Não → vá pra 2</div>
+ <div class="node lvl2">2. Você <b>conhece</b> quem mandou? <b class="n">Sim → NORMAL</b> · Não → vá pra 3</div>
+ <div class="node lvl3">3. Tem <b>link</b> ou <b>anexo</b>? <b class="s">Sim → SPAM</b> · <b class="n">Não → NORMAL</b></div>
+</div>`;
+const SP=["🚫 SPAM","✅ NORMAL"];
+const Q4={step:3,eyebrow:"Missão 4 de 6 · Fase 2",title:"Você é o filtro de spam",countLabel:"E-mail",doneLabel:"Próxima missão",panel:TREE,
+ intro:"Agora você é a IA! Siga a árvore de decisão de cima pra baixo, pergunta por pergunta, e decida se cada e-mail é spam. Não use a sua opinião, use a árvore!",
+ steps:[
+ {kind:"bin",labels:SP,a:1,from:"Sua professora",mail:"Oi, turma! A prova de quinta mudou pra sexta.",why:"Pergunta 1: não pede senha. Pergunta 2: você conhece. Então é NORMAL."},
+ {kind:"bin",labels:SP,a:0,from:"Banco Seguro Total",mail:"Sua conta foi bloqueada. Responda com a sua senha pra liberar.",why:"Pergunta 1: pede senha. Pronto, SPAM na hora!"},
+ {kind:"bin",labels:SP,a:0,from:"Loja Mega Prêmios",mail:"Você ganhou um celular! Clique no link pra pegar.",why:"Não pede senha, você não conhece e tem link. SPAM!"},
+ {kind:"bin",labels:SP,a:1,from:"Pessoa desconhecida",mail:"Oi, tudo bem? Acho que mandei pro e-mail errado, desculpa.",why:"Não pede senha, não conhece, mas não tem link nem anexo. Pela árvore é NORMAL."},
+ {kind:"bin",labels:SP,a:0,from:"Seu primo",mail:"Me passa a senha da sua conta do jogo? Vou subir seu nível!",why:"Pegadinha! Mesmo conhecendo, a pergunta 1 vem primeiro: pediu senha, é SPAM."},
+ {kind:"bin",labels:SP,a:1,from:"Seu melhor amigo",mail:"Olha esse vídeo engraçado que eu achei! (link)",why:"Não pede senha e você conhece, então a árvore para na pergunta 2: NORMAL."}
+ ],next:()=>runQuiz(Q5)};
+
+/* ============ MISSÃO 5 ============ */
+const Q5={step:4,eyebrow:"Missão 5 de 6",title:"Conversando com a IA",doneLabel:"Próxima missão",
+ intro:"Chatbots são IAs que conversam por texto. O pedido que você escreve pra elas se chama prompt. Vamos ver quem sabe usar bem!",
+ steps:[
+ {kind:"mc",pic:"💬",q:"Qual prompt vai dar a MELHOR resposta?",
+  o:["fotossíntese","me fala de planta","Explique o que é fotossíntese pra um aluno do 7º ano, em 3 frases curtas","responde aí"],a:2,why:"Isso! Um bom prompt diz o assunto, pra quem é e o tamanho da resposta."},
+ {kind:"mc",pic:"🤖💭",q:"Um chatbot disse com toda a certeza que o Brasil tem 50 estados. O que aconteceu?",
+  o:["O Brasil mudou ontem","A IA inventou uma resposta errada, parecendo verdade","O chatbot está brincando de propósito","Isso nunca acontece com IA"],a:1,why:"Exato! Isso se chama alucinação: a IA inventa coisas com cara de verdade."},
+ {kind:"mc",pic:"📚",q:"Você vai usar uma resposta da IA num trabalho da escola. O que fazer antes?",
+  o:["Copiar tudo direto","Conferir as informações em fontes confiáveis, como livros e sites oficiais","Pedir pra outra IA dizer que está certo","Nada, IA nunca erra"],a:1,why:"Isso! Sempre confira antes de usar."},
+ {kind:"mc",pic:"🔤 ➜ 🔤 ➜ ❓",small:1,q:"Como um chatbot escreve as respostas?",
+  o:["Ele pensa e sente igual a uma pessoa","Ele copia um site inteiro","Ele escolhe a próxima palavra mais provável, com base em tudo que leu no treino","Uma pessoa escondida responde"],a:2,why:"Exato! Ele vai montando o texto palavra por palavra, pelo que é mais provável."},
+ {kind:"mc",pic:"🙋",q:"Qual destes é um uso NÃO honesto da IA na escola?",
+  o:["Pedir pra explicar uma matéria que eu não entendi","Pedir ideias pra começar uma redação","Mandar a IA fazer o trabalho todo e entregar como se fosse meu","Pedir exercícios pra treinar pra prova"],a:2,why:"Isso! Entregar o trabalho da IA como se fosse seu não é honesto. Use ela pra aprender."},
+ {kind:"mc",pic:"🖼️❓",q:"Você viu uma foto do seu cantor favorito andando num dinossauro. Qual a melhor atitude?",
+  o:["Compartilhar rápido antes de todo mundo","Desconfiar: pode ser imagem feita por IA. Procurar se é real antes de compartilhar","Acreditar, porque foto não mente","Mandar pro grupo da família"],a:1,why:"Isso! IA consegue criar imagens falsas bem realistas. Confira antes de espalhar."}
+ ],next:()=>runQuiz(Q6)};
+
+/* ============ MISSÃO 6 ============ */
+const Q6={step:5,eyebrow:"Missão 6 de 6",title:"Calcule como cientista",doneLabel:"Ver meu resultado",
+ panel:`<p class="tip">🧮 Fórmula da taxa de acerto: <b>acertos ÷ total × 100</b>. Exemplo: acertou 8 de 10 → 8 ÷ 10 = 0,8 → 0,8 × 100 = <b>80%</b>.</p>`,
+ intro:"Cientistas medem se uma IA é boa calculando a taxa de acerto. Pode usar o caderno ou a calculadora do computador!",
+ steps:[
+ {kind:"num",pic:"🤖 📸×20",small:1,q:"O Bit viu 20 fotos novas e acertou 15. Quantas ele ERROU?",a:5,unit:"",hint:"Total menos acertos.",why:"20 − 15 = 5 erros."},
+ {kind:"num",pic:"🤖 ✅15 / 20",small:1,q:"Qual foi a taxa de acerto do Bit? (15 de 20)",a:75,unit:"%",hint:"15 ÷ 20 e depois × 100.",why:"15 ÷ 20 = 0,75 → 75%."},
+ {kind:"num",pic:"🤖 ✅45 / 50",small:1,q:"A robô Byte acertou 45 de 50 fotos. Qual é a taxa de acerto dela?",a:90,unit:"%",hint:"45 ÷ 50 e depois × 100.",why:"45 ÷ 50 = 0,9 → 90%."},
+ {kind:"mc",pic:"🤖 75%  vs  🤖 90%",small:1,q:"Bit teve 75% e Byte teve 90%. Qual robô vai melhor em fotos novas?",o:["Bit","Byte","Os dois são iguais","Não dá pra saber nada"],a:1,why:"Byte! A taxa de acerto dela é maior."},
+ {kind:"num",pic:"🐶✅10/10  🐱✅2/10",small:1,q:"Um robô testou 10 cachorros e 10 gatos. Acertou 10 cachorros e só 2 gatos. Qual a taxa de acerto TOTAL?",a:60,unit:"%",hint:"Some os acertos (10 + 2) e divida pelo total de fotos (20).",why:"12 ÷ 20 = 0,6 → 60%."},
+ {kind:"mc",pic:"🐱 2/10",small:1,q:"Nesse mesmo robô, o que a gente descobre olhando só os gatos?",o:["Ele é ótimo em tudo","Ele é muito ruim com gatos: deve ter treinado com poucas fotos de gato","Gatos não aparecem em fotos","Ele acertou 100%"],a:1,why:"Isso! Olhar cada grupo separado mostra onde a IA tem viés. Lembra da Missão 2?"}
+ ],next:finish};
+
+/* ============ FIM ============ */
 function finish(){const w=["BYTE","CHIP","DATA","BOT","NEURO"];
+  const pct=stars/MAX;
+  $("endRank").textContent=pct>=.85?"Cientista de IA 🧪":pct>=.6?"Treinador de IA 🏅":"Aprendiz de IA 🌱";
   $("endTitle").textContent="Parabéns, "+student.split(" ")[0]+"!";
   $("endCode").textContent="BIT-"+w[stars%w.length]+"-"+stars;
   $("endStars").textContent="Você fez ⭐ "+stars+" de "+MAX+" estrelas";show("s-end");}
-$("againAll").onclick=()=>{m4star=false;startAll();};
+$("againAll").onclick=startAll;
 </script>
-
-</body></html>
